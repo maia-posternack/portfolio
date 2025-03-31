@@ -55,11 +55,12 @@ const signInWithGoogle = async () => {
   userName.value = user.displayName
 
   // 🔥 Send to GPT backend
-  const res = await fetch('http://localhost:3001/gpt-intro', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fullName: user.displayName }),
-  })
+  const res = await fetch('/api/gpt-intro', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ fullName: user.displayName }),
+})
+
   const data = await res.json()
   roastText.value = data.message
 }

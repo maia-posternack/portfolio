@@ -1,11 +1,4 @@
-import express from 'express'
-import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
-import 'dotenv/config'
-
-const app = express()
-app.use(cors())
-app.use(express.json())
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -13,7 +6,11 @@ const openai = new OpenAIApi(
   })
 )
 
-app.post('/gpt-intro', async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
+  }
+
   const { fullName } = req.body
 
   const prompt = `
@@ -28,13 +25,9 @@ Keep it under 100 words.
     })
 
     const message = completion.data.choices[0].message.content
-    res.json({ message })
+    res.status(200).json({ message })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ error: 'GPT failed.' })
+    res.status(500).json({ error: 'Failed to generate roast.' })
   }
-})
-
-app.listen(3001, () => {
-  console.log('GPT roast server listening on http://localhost:3001')
-})
+}
