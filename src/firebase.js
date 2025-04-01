@@ -1,6 +1,6 @@
-// src/firebase.js
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDWAP8xGaT4_acYQ2Yt-gl3sZV4ag_RzP4",
@@ -16,5 +16,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
+const storage = getStorage(app)
 
-export { auth, provider }
+// ✅ upload function
+const uploadUserImage = async (file, fileName) => {
+  const storageRef = ref(storage, `uploads/${fileName}`)
+  const snapshot = await uploadBytes(storageRef, file)
+  const downloadURL = await getDownloadURL(snapshot.ref)
+  return downloadURL
+}
+
+export { auth, provider, uploadUserImage }
