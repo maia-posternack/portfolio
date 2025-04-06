@@ -70,7 +70,7 @@ onMounted(async () => {
 })
 </script>
 
-<style>
+<style scoped>
 .scan-wrapper {
   position: relative;
   height: 100vh;

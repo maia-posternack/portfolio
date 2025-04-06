@@ -143,7 +143,7 @@ function tryRevealTileWall() {
 
 </script>
 
-<style>
+<style scoped>
 /* === Base Layout === */
 .roast-wrapper {
   position: relative;

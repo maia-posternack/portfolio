@@ -85,7 +85,7 @@
   })
   </script>
   
-  <style>
+  <style scoped>
   /* === GLOBAL RESET === */
   html,
   body,
