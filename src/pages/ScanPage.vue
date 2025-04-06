@@ -236,7 +236,10 @@ onMounted(async () => {
     width: 200px;
     bottom: 5%;
     right: 5%;
-    transform: rotate(-8deg);
+    transform: translateY(-15px) translateX(-20px) rotate(-8deg) ;
+  }
+  .scan-wrapper{
+    transform: translateY(-50px);
   }
 }
 
@@ -259,7 +262,7 @@ onMounted(async () => {
     width: 160px;
     bottom: 4%;
     right: 4%;
-    transform: rotate(-6deg);
+    transform: translateY(-10px) translateX(-5px) rotate(-6deg);
   }
 }
 
