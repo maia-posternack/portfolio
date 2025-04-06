@@ -38,7 +38,7 @@ Use the following real search results about a person named "${fullName}" to gene
 
 ${snippets}
 
-Now, write the roast in a creepy, smart, and hilarious tone. Don't sound like an AI bot, instead try to sound like a Harvard Lampoon writer. Meaner. Start with "Fancy seeing ${fullName} here"
+Now, write the roast in a creepy, smart, and hilarious tone. Don't sound like an AI bot, instead try to sound like a Harvard Lampoon writer. Meaner. Start with "Fancy you here, ${fullName}"
 `
 
   const roastCompletion = await openai.createChatCompletion({

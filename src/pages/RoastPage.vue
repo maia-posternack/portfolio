@@ -9,13 +9,21 @@
       </div>
 
       <div v-if="deepfakeImage && showTileWall" class="deepfake-wall">
-        <img
-  v-for="n in tileCount"
-  :key="n"
-  :src="deepfakeImage"
-  class="deepfake-tile"
-  :style="`width: ${tileSize}px; height: ${tileSize}px; --delay: ${n * 80}ms`"
-/>
+        <div
+  v-for="(tile, i) in tiles"
+  :key="i"
+  class="deepfake-tile-wrapper"
+  :class="{ glow: i === glowingTileIndex, flipped: tile.flipped }"
+  :style="`width: ${tileSize}px; height: ${tileSize}px; --delay: ${i * 80}ms`"
+  @click="revealProject(i)"
+>
+  <img v-if="!tile.flipped" :src="deepfakeImage" class="deepfake-tile" />
+
+  <div v-else class="project-tile">
+    <p class="tile-text">okay.... packet time. try to contain your excitement!</p>
+  </div>
+</div>
+
 
 </div>
 
@@ -28,7 +36,9 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { session } from '../session'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const roast = session.get('roastText')
 const identity = session.get('roastIdentity')
 const deepfakeImage = ref(null)
@@ -40,6 +50,33 @@ const imageReady = ref(false)
 const formattedIdentity = computed(() => identity.replace(/_/g, ' '))
 const tileCount = ref(0)
 const tileSize = ref(0)
+const tiles = ref([])
+const glowingTileIndex = ref(null)
+const cols = ref(0)
+
+function initTiles() {
+  tiles.value = Array.from({ length: tileCount.value }, () => ({
+    flipped: false
+  }))
+
+  // Choose a tile ~in the center to glow after a delay
+  setTimeout(() => {
+  const centerIndex = cols.value*2+1
+  glowingTileIndex.value = centerIndex
+  console.log("Glowing tile:", centerIndex)
+}, tileCount.value * 80 + 1000)
+
+}
+
+function revealProject(i) {
+  if (i === glowingTileIndex.value) {
+    tiles.value[i].flipped = true
+    setTimeout(() => {
+      router.push('/packet')
+    }, 2000)
+  }
+}
+
 
 function calculateTileGrid() {
   const minTileSize = window.innerWidth < 768 ? 80 : 250 // 👈 adjust size for mobile vs desktop
@@ -47,6 +84,8 @@ function calculateTileGrid() {
   const rows = Math.ceil(window.innerHeight / minTileSize)
   tileSize.value = Math.floor(window.innerWidth / columns)
   tileCount.value = columns * rows
+  cols.value = columns
+
 }
 
 function typeRoast(text) {
@@ -89,6 +128,7 @@ onMounted(async () => {
 
 function tryRevealTileWall() {
   if (textFinished.value && imageReady.value) {
+    initTiles()
     showIdentityLine.value = true
     setTimeout(() => {
       showTileWall.value = true
@@ -208,6 +248,14 @@ function tryRevealTileWall() {
     margin-top: .5rem;
     font-size: 1.1rem;
   }
+  .tile-text{
+    font-size: .7rem;
+    transform: translateX(-5px);
+
+
+
+
+  }
 }
 
 
@@ -225,8 +273,10 @@ function tryRevealTileWall() {
   flex-wrap: wrap;
   gap: 0;
   z-index: 100;
-  pointer-events: none;
+  pointer-events: auto; 
   background: transparent;
+  overflow: visible; /* ✅ so box-shadow isn't clipped */
+
 }
 
 
@@ -255,6 +305,57 @@ function tryRevealTileWall() {
   }
 }
 
+.deepfake-tile-wrapper {
+  position: relative;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 0px #00ff00, 0 0 0px #00ff00 inset;
+  }
+  50% {
+    box-shadow: 0 0 25px 10px #00ff00, 0 0 10px 4px #00ff00 inset;
+  }
+  100% {
+    box-shadow: 0 0 0px #00ff00, 0 0 0px #00ff00 inset;
+  }
+}
+
+.deepfake-tile-wrapper.glow {
+  animation: glow 1.5s ease-in-out infinite;
+  z-index: 1000; /* make sure it floats above nearby tiles */
+  border-radius: 4px; /* optional */
+  pointer-events: auto; /* make sure it's clickable */
+}
+
+
+.deepfake-tile-wrapper.flipped {
+  transform: scale(1.5) rotateY(180deg);
+  z-index: 9999;
+  
+}
+
+.project-tile {
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  color: #00ffaa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  font-size: 2rem;
+}
+
+.tile-text{
+  margin-left: 1rem;
+
+}
 
 
 </style>

@@ -1,23 +1,17 @@
 <template>
-    <div class="deepfake-wall projects-wall">
-      <div
-        v-for="(tile, i) in tiles"
-        :key="i"
-        class="project-tile-wrapper"
-        :class="{ 'is-project': tile.isProject, flipped: tile.flipped }"
-        @click="revealTile(i)"
-        :style="`--delay: ${i * 60}ms`"
-      >
-        <!-- Front face: deepfake tile -->
-        <div class="tile-face tile-front">
-          <img :src="deepfakeImage" class="deepfake-tile" />
-        </div>
+    <div class="packet-page">
+      <!-- Left: Deepfake image -->
+      <div class="deepfake-panel">
+        <img :src="deepfakeImage" class="deepfake-avatar" />
+      </div>
   
-        <!-- Back face: project info -->
-        <div v-if="tile.isProject" class="tile-face tile-back">
-          <h3>{{ tile.project.name }}</h3>
-          <p>{{ tile.project.description }}</p>
-          <a :href="tile.project.link" target="_blank">View →</a>
+      <!-- Right: Project cards -->
+      <div class="project-panel">
+        <h1 class="packet-header">ACCESS GRANTED: PROJECT DOSSIER</h1>
+        <div class="project-card" v-for="project in projects" :key="project.name">
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.description }}</p>
+          <a :href="project.link" target="_blank">View →</a>
         </div>
       </div>
     </div>
@@ -27,7 +21,6 @@
   import { session } from '../session'
   
   const deepfakeImage = ref(null)
-  const tiles = ref([])
   
   const projects = [
     {
@@ -45,90 +38,103 @@
       link: '#',
       description: 'AI that writes angry emails to administrators for you.',
     },
-    // Add more here
   ]
   
   onMounted(() => {
     deepfakeImage.value = session.get('deepfakeImage') || '/fallback.jpg'
-  
-    const totalTiles = 80
-    const selectedIndices = new Set()
-  
-    while (selectedIndices.size < projects.length) {
-      selectedIndices.add(Math.floor(Math.random() * totalTiles))
-    }
-  
-    tiles.value = Array.from({ length: totalTiles }, (_, i) => {
-      const isProject = selectedIndices.has(i)
-      return {
-        isProject,
-        flipped: false,
-        project: isProject ? projects[selectedIndices.size - [...selectedIndices].indexOf(i) - 1] : null
-      }
-    })
   })
-  
-  function revealTile(i) {
-    if (tiles.value[i].isProject) {
-      tiles.value[i].flipped = !tiles.value[i].flipped
-    }
-  }
   </script>
   <style scoped>
-  .projects-wall {
-  pointer-events: auto;
-  z-index: 9999;
-}
-
-.project-tile-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.8s;
-  animation: tile-fade-in 0.5s ease forwards;
-  animation-delay: var(--delay);
-}
-
-.project-tile-wrapper.is-project {
-  animation: glow 2s infinite alternate;
-  cursor: pointer;
-}
-
-.project-tile-wrapper.flipped {
-  transform: rotateY(180deg);
-}
-
-.tile-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.tile-front {
-  z-index: 1;
-}
-
-.tile-back {
+.packet-page {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
   background: #0d1117;
   color: #00ffaa;
-  padding: 1rem;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+/* LEFT: Deepfake image full-panel */
+.deepfake-bg {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.6) blur(2px);
+  animation: fade-in-bg 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in-bg {
+  to {
+    opacity: 1;
+  }
+}
+
+/* RIGHT: Project Panel */
+.project-panel {
+  flex: 1;
+  padding: 4rem 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transform: rotateY(180deg);
-  font-family: monospace;
+  gap: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  overflow-y: auto;
 }
 
-@keyframes glow {
-  from {
-    box-shadow: 0 0 0px #00ffaa00;
+.packet-header {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #00ffcc;
+  letter-spacing: 1px;
+}
+
+.project-card {
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid #00ffaa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #00ffaa55;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px #00ffaa88;
+}
+
+.project-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.project-card a {
+  font-size: 0.9rem;
+  color: #00ffaa;
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .packet-page {
+    flex-direction: column;
   }
-  to {
-    box-shadow: 0 0 20px #00ffaa80;
+
+  .deepfake-bg {
+    height: 40vh;
+    width: 100%;
+  }
+
+  .project-panel {
+    padding: 2rem 1.5rem;
   }
 }
 
-</style>
+
+  </style>
+  
