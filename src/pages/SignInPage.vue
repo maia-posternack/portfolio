@@ -127,8 +127,8 @@
     font-family: monospace;
     font-size: 2rem;
     padding: 1rem 2.5rem;
-    color: black;
-    background-color: #00ff00;
+    color: #00ff00;
+    background-color: #0d1117;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -138,6 +138,8 @@
   .hacker-button:hover {
     background-color: #00ff80;
     box-shadow: 0 0 40px #00ff80;
+    color: black;
+
   }
   
 

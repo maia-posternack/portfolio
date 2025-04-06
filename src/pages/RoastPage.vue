@@ -1,47 +1,35 @@
-<template>
-  <div class="roast-wrapper">
-    <!-- Roast typing -->
-    <pre class="roast-text">{{ typedRoast }}</pre>
+  <template>
+    <div class="app-container">
+      <div class="roast-wrapper">
+        <pre class="roast-text">{{ typedRoast }}</pre>
 
-    <!-- Identity line -->
-    <p v-if="showIdentityLine" class="identity-glitch">
-      Anyone ever tell you that you remind them of <span class="identity-name">{{ formattedIdentity }}</span>?
-    </p>
+        <p v-if="showIdentityLine" class="identity-glitch">
+          Anyone ever tell you that you remind them of <span class="identity-name">{{ formattedIdentity }}</span>?
+        </p>
+      </div>
 
-    <!-- Deepfake tile takeover -->
-    <div
-  v-if="deepfakeImage && showTileWall"
-  class="deepfake-wall"
->
-  <img
-    v-for="n in 60"
-    :key="n"
-    :src="deepfakeImage"
-    class="deepfake-tile"
-    :style="`--delay: ${n * 120}ms`"
-  />
+      <div v-if="deepfakeImage && showTileWall" class="deepfake-wall">
+        <img
+  v-for="n in tileCount"
+  :key="n"
+  :src="deepfakeImage"
+  class="deepfake-tile"
+  :style="`width: ${tileSize}px; height: ${tileSize}px; --delay: ${n * 80}ms`"
+/>
+
 </div>
 
-    <!-- Project Portals -->
-    <div class="project-section">
-      <h2 class="portal-header">YOUR PORTALS</h2>
-      <div class="portals">
-        <div v-for="project in projects" :key="project.name" class="portal-card">
-          <a :href="project.link" target="_blank">
-            <h3>{{ project.name }}</h3>
-            <p>{{ project.description }}</p>
-          </a>
-        </div>
-      </div>
     </div>
-  </div>
-</template>
+  </template>
+
+
+
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { session } from '../session'
 
-const roast =  session.get('roastText')
+const roast = session.get('roastText')
 const identity = session.get('roastIdentity')
 const deepfakeImage = ref(null)
 const typedRoast = ref('')
@@ -50,26 +38,16 @@ const showTileWall = ref(false)
 const textFinished = ref(false)
 const imageReady = ref(false)
 const formattedIdentity = computed(() => identity.replace(/_/g, ' '))
+const tileCount = ref(0)
+const tileSize = ref(0)
 
-
-
-const projects = [
-  {
-    name: 'Harvymarket',
-    link: 'https://harvymarket.com',
-    description: 'A satirical prediction market for Harvard gossip.',
-  },
-  {
-    name: 'JesterNet',
-    link: '#',
-    description: 'The worst social network on Earth. Proud of it.',
-  },
-  {
-    name: 'AdminAI',
-    link: '#',
-    description: 'AI that writes angry emails to administrators for you.',
-  },
-]
+function calculateTileGrid() {
+  const minTileSize = window.innerWidth < 768 ? 80 : 250 // 👈 adjust size for mobile vs desktop
+  const columns = Math.floor(window.innerWidth / minTileSize)
+  const rows = Math.ceil(window.innerHeight / minTileSize)
+  tileSize.value = Math.floor(window.innerWidth / columns)
+  tileCount.value = columns * rows
+}
 
 function typeRoast(text) {
   let i = 0
@@ -85,22 +63,27 @@ function typeRoast(text) {
   }, 35)
 }
 onMounted(async () => {
+  calculateTileGrid()
+  window.addEventListener('resize', calculateTileGrid)
+
   typeRoast(roast)
+
 
   const userImage = session.get('userImage')
   const characterImage = session.get('characterImage')
-
   const swap_info = await fetch('/api/face-swap', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ characterImage, userImage }),
   })
 
-  const swap = await swap_info.json()
-  console.log("SWAP!!!", swap)
-  deepfakeImage.value = swap.deepfakedImage || userImage
-  imageReady.value = true
-  tryRevealTileWall()
+    const swap = await swap_info.json()
+    console.log("SWAP!!!", swap)
+
+    deepfakeImage.value = swap.deepfakedImage || userImage
+    session.set('deepfakeImage', deepfakeImage.value)
+    imageReady.value = true
+    tryRevealTileWall()
 
 })
 
@@ -109,7 +92,7 @@ function tryRevealTileWall() {
     showIdentityLine.value = true
     setTimeout(() => {
       showTileWall.value = true
-      tryRevealTileWall()
+     
 
     }, 2000)
   }
@@ -123,26 +106,30 @@ function tryRevealTileWall() {
 <style>
 /* === Base Layout === */
 .roast-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
   background: #0d1117;
+  overflow-y: auto;
   color: #00ff00;
   font-family: monospace;
-  min-height: 100vh;
-  padding: 2rem;
-  overflow-x: hidden;
-  z-index: 10; /* BELOW tile wall */
-
 }
+
 
 /* === Typewriter Text === */
 .roast-text {
   white-space: pre-wrap;
   font-size: 2rem;
   line-height: 1.7;
-  max-width: 1400px;      /* ✅ wider than before */
-  width: 100%;            /* ✅ full width on large screens */
-  margin: 6rem auto 2rem auto; /* ✅ vertically centered-ish */
+  max-width: 1400px;
+  /* ✅ wider than before */
+  width: 100%;
+  /* ✅ full width on large screens */
+  margin: 6rem auto 2rem auto;
+  /* ✅ vertically centered-ish */
   padding-left: 3rem;
   padding-right: 2rem;
+  margin-top: 15rem;
   text-align: left;
   border-left: 3px solid #00ff00;
   animation: cursor-blink 1s step-start infinite;
@@ -151,10 +138,14 @@ function tryRevealTileWall() {
 
 
 @keyframes cursor-blink {
-  0%, 49% {
+
+  0%,
+  49% {
     border-color: #00ff00;
   }
-  50%, 100% {
+
+  50%,
+  100% {
     border-color: transparent;
   }
 }
@@ -166,7 +157,7 @@ function tryRevealTileWall() {
   margin-top: 2rem;
   font-size: 2rem;
   color: #00ffaa;
-  animation: glitch-flicker 2s infinite;
+  animation: glitch-flicker 4s infinite;
 }
 
 .identity-name {
@@ -195,120 +186,75 @@ function tryRevealTileWall() {
     transform: translateX(1px);
   }
 }
+
 @media (max-width: 768px) {
   .roast-text {
-    font-size: 1.6rem;
+    font-size: .8rem;
     padding: 1rem;
-    margin: 2rem 1rem;
+    margin: 2rem 2rem;
+    padding-right: 2rem; /* Add more padding to the right */
+    text-align: left;
+    transform: none;
+    max-width: calc(100% - 6rem); /* Ensure it doesn't exceed the screen width */
+
     border-left: 2px solid #00ff00;
-    border-right: 2px solid #00ff00;
+  }
+  .deepfake-tile {
+    flex: 1 0 20vw;
+    height: 20vw;
+  }
+
+  .identity-glitch {
+    margin-top: .5rem;
+    font-size: 1.1rem;
   }
 }
 
-@media (max-width: 480px) {
-  .roast-text {
-    font-size: 1.2rem;
-    padding: 0.5rem;
-    margin: 1.5rem 0.5rem;
-    border-left: 2px solid #00ff00;
-    border-right: 2px solid #00ff00;
-  }
-}
+
 
 
 /* === Deepfake Tile Takeover === */
+
 .deepfake-wall {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
   z-index: 100;
   pointer-events: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
-  grid-auto-rows: auto;
-  gap: 0;
-  overflow: hidden;
-  background: #0d1117;
+  background: transparent;
 }
+
 
 
 .deepfake-tile {
   width: 100%;
-  height: 100%;
-  object-fit: contain; /* ✅ Keep original aspect ratio */
-  margin: 0;
-  padding: 0;
-  border: none;
+  height: 100%; /* ✅ ensure square shape within grid */
+  object-fit: cover;
   opacity: 0;
+  z-index: 200;
   animation: tile-fade-in 0.6s ease forwards;
+  background: #0d1117;
   animation-delay: var(--delay);
 }
+
 
 @keyframes tile-fade-in {
   0% {
     opacity: 0;
     transform: scale(1.1) rotate(-2deg);
   }
+
   100% {
-    opacity: 0.85;
+    opacity: 1;
     transform: scale(1) rotate(0deg);
   }
 }
 
-/* === Project Portals === */
-.project-section {
-  margin-top: 80vh;
-  padding-top: 2rem;
-}
-
-.portal-header {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 10px #00ff00;
-}
-
-.portals {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.portal-card {
-  background: rgba(0, 255, 0, 0.05);
-  border: 1px solid #00ff00;
-  padding: 1rem;
-  border-radius: 8px;
-  width: 260px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align: left;
-  color: #00ff00;
-}
-
-.portal-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 0 20px #00ff00;
-}
-
-.portal-card a {
-  text-decoration: none;
-  color: inherit;
-}
-@media (max-width: 750px) {
-  .deepfake-wall {
-    grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr)); /* Bigger tiles */
-    /* ✅ Remove grid-auto-rows to let height follow aspect ratio */
-  }
-
-  .deepfake-tile {
-    object-fit: contain; /* ✅ Keep original aspect ratio */
-    width: 100%;
-    height: auto;
-  }
-}
 
 
 </style>
