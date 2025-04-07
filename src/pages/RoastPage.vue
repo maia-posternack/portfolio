@@ -79,7 +79,7 @@ function revealProject(i) {
 
 
 function calculateTileGrid() {
-  const minTileSize = window.innerWidth < 768 ? 80 : 250 // 👈 adjust size for mobile vs desktop
+  const minTileSize = window.innerWidth < 768 ? 100 : 300 // 👈 adjust size for mobile vs desktop
   const columns = Math.floor(window.innerWidth / minTileSize)
   const rows = Math.ceil(window.innerHeight / minTileSize)
   tileSize.value = Math.floor(window.innerWidth / columns)
@@ -162,18 +162,14 @@ function tryRevealTileWall() {
   font-size: 2rem;
   line-height: 1.7;
   max-width: 1400px;
-  /* ✅ wider than before */
   width: 100%;
-  /* ✅ full width on large screens */
   margin: 6rem auto 2rem auto;
-  /* ✅ vertically centered-ish */
   padding-left: 3rem;
   padding-right: 2rem;
   margin-top: 15rem;
   text-align: left;
   border-left: 3px solid #00ff00;
   animation: cursor-blink 1s step-start infinite;
-  /* ❌ Removed text-shadow for non-glowy look */
 }
 
 
@@ -232,17 +228,13 @@ function tryRevealTileWall() {
     font-size: .8rem;
     padding: 1rem;
     margin: 2rem 2rem;
-    padding-right: 2rem; /* Add more padding to the right */
+    padding-right: 1rem; 
     text-align: left;
     transform: none;
-    max-width: calc(100% - 6rem); /* Ensure it doesn't exceed the screen width */
-
+    max-width: calc(100% - 5rem); /* Ensure it doesn't exceed the screen width */
     border-left: 2px solid #00ff00;
   }
-  .deepfake-tile {
-    flex: 1 0 20vw;
-    height: 20vw;
-  }
+
 
   .identity-glitch {
     margin-top: .5rem;

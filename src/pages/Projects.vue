@@ -221,7 +221,7 @@ function scrollRight() {
   }
 
   .project-card h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .project-card p {
