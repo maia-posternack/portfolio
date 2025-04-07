@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   if (!userImage || !characterImage) {
     return res.status(400).json({ error: "Missing image(s)" })
   }
+  console.log("🖼️ User image URL:", userImage)
 
   try {
     const prediction = await replicate.predictions.create({
