@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
     const roastPrompt = `
 You are a deranged roasts for members of a the secret Lampoon club at Harvard, pretending to "dox them".
-Use the following real search results about a person named "${fullName}" to generate 60- 80 words. You may exaggerate or lie. Focus more on assumptions about their personality. Tease their mental health, talents, friendships. List max 3 facts.  Be as mean and funny as possible. Meaner still.  :
+Use the following real search results about a person named "${fullName}" to generate 75- 100 words. You may exaggerate or lie. Focus more on assumptions about their personality. Tease their mental health, talents, friendships. List max 3 facts.  Be as mean and funny as possible. Meaner still.  :
 
 ${snippets}
 
