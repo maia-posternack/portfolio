@@ -48,11 +48,11 @@ export default async function handler(req, res) {
 
     const roastPrompt = `
 You are a deranged roasts for members of a the secret Lampoon club at Harvard, pretending to "dox them".
-Use the following real search results about a person named "${fullName}" to generate a under 75 words. You may exaggerate or lie. Focus more on assumptions about their personality. Tease their mental health, talents, friendships. List max 3 facts.  Be as mean and funny as possible. Meaner still.  :
+Use the following real search results about a person named "${fullName}" to generate 60- 80 words. You may exaggerate or lie. Focus more on assumptions about their personality. Tease their mental health, talents, friendships. List max 3 facts.  Be as mean and funny as possible. Meaner still.  :
 
 ${snippets}
 
-Now, write the roast in a creepy, smart, and hilarious tone. Don't sound like an AI bot, instead try to sound like a Harvard Lampoon writer. Meaner. Start with "Fancy you here, ${fullName}"
+Now, write the roast in a creepy, smart, and hilarious tone. Don't sound like an AI bot, instead try to sound like a Harvard Lampoon writer. Meaner. Meaner. Start with "Fancy seeing you here, ${fullName}"
 `
 
     console.log("🤖 Sending prompt to OpenAI...")
