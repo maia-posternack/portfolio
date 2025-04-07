@@ -44,6 +44,7 @@ export default async function handler(req, res) {
       .map(r => `- ${r.title}\n  ${r.snippet || ''}`)
       .slice(0, 6)
       .join('\n\n')
+      console.log("Key:", process.env.OPENAI_API_KEY)
 
     const roastPrompt = `
 You are a deranged roasts for members of a the secret Lampoon club at Harvard, pretending to "dox them".
