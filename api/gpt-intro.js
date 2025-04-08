@@ -25,6 +25,7 @@ export default async function handler(req, res) {
 
     const search = new SerpApi.GoogleSearch(process.env.SERPAPI_KEY)
     console.log("🔍 Starting SerpAPI search...")
+    console.log(process.env.SERPAPI_KEY)
 
     const snippetData = await new Promise((resolve, reject) => {
       search.json({
