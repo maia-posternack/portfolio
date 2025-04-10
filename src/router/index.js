@@ -3,6 +3,8 @@ import SignInPage from '../pages/SignInPage.vue'
 import ScanPage from '../pages/ScanPage.vue'
 import RoastPage from '../pages/RoastPage.vue'
 import Projects from '../pages/Projects.vue'
+import Crimson from '../pages/Crimson.vue'
+
 
 
 const routes = [
@@ -10,7 +12,9 @@ const routes = [
   { path: '/sign-in', component: SignInPage },
   { path: '/scan', component: ScanPage },
   { path: '/roast', component: RoastPage },
-  { path: '/packet', component: Projects }
+  { path: '/packet', component: Projects },
+  { path: '/crimson', component: Crimson }
+
 
 ]
 

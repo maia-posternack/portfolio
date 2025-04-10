@@ -50,8 +50,8 @@ const projects = [
   },
   {
     name: "Crimson Ads Takeover",
-    link: "#",
-    description: "Plastered TheCrimson.com with Lampoon ads",
+    link: "/crimson",
+    description: "Plastered TheCrimson.com with Lampoon ads that you chose!",
   },
   {
     name: "FinalClubTies.com",
