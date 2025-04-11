@@ -51,12 +51,12 @@ const projects = [
   {
     name: "Crimson Ads Takeover",
     link: "/crimson",
-    description: "Plastered TheCrimson.com with Lampoon ads that you chose!",
+    description: 'Plastered TheCrimson.com with Lampoon ads that you chose (Brenton protesting the A.D, and "Free Marco") which got 35k views in 1 day.',
   },
   {
     name: "FinalClubTies.com",
     link: "https://finalclubties.com",
-    description: "Got cut from the Spee? I have an easy fix ",
+    description: "Got cut from the Spee? I have an easy fix for you",
   },
   {
     name: "LampoonWhenItWasFunny.com",
