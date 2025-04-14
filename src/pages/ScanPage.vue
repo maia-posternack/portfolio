@@ -55,12 +55,6 @@ onMounted(async () => {
   session.set('characterImage', img.characterImage)
   userImage.value = img.userImage
 
-  // Wait until at least 3 seconds have passed
-  const elapsed = Date.now() - start
-  if (elapsed < 1500) {
-    await new Promise(resolve => setTimeout(resolve, 3000 - elapsed))
-  }
-
   // Show popup + image
   showPopup.value = true
   setTimeout(() => { showImage.value = true }, 500)

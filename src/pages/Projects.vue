@@ -48,14 +48,14 @@ const projects = [
     description: 'Plastered TheCrimson.com with Lampoon ads that you chose (Brenton protesting the A.D, and "Free Marco") which got 35k views in 1 day.',
   },
   {
-    name: "HarvyMarket.com",
-    link: "https://harvymarket.com",
-    description: "Polymarket spoof; To enable your betting addiction",
-  },
-  {
     name: "FinalClubTies.com",
     link: "https://finalclubties.com",
     description: "Got cut from the Spee? I have an easy fix for you (and it works!)",
+  },
+  {
+    name: "HarvyMarket.com",
+    link: "https://harvymarket.com",
+    description: "Polymarket spoof; To enable your betting addiction",
   },
   {
     name: "LampoonWhenItWasFunny.com",
