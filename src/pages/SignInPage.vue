@@ -10,7 +10,7 @@
       <!-- Sign-In Button -->
       <div class="button-container">
         <button @click="signInWithGoogle" class="hacker-button">
-          Sign in with Google
+          Sign in with Harvard
         </button>
       </div>
     </div>
