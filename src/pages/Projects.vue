@@ -56,7 +56,7 @@ const projects = [
   {
     name: "FinalClubTies.com",
     link: "https://finalclubties.com",
-    description: "Got cut from the Spee? I have an easy fix for you",
+    description: "Got cut from the Spee? I have an easy fix for you (and it works!)",
   },
   {
     name: "LampoonWhenItWasFunny.com",
