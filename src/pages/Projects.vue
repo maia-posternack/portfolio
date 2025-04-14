@@ -66,7 +66,7 @@ const projects = [
   {
     name: "Announcing Co-Presidents: Hamza and Avery",
     link: "/hua",
-    description: "Premade email campaign sent to all undergraduates announcing that there has been an error, and Hamza and Avery are the new co-presidents of the HUA. To be sent out as you please.",
+    description: "Email campaign sent to all undergrads announcing that there has been an error and Hamza and Avery are the new co-presidents of the HUA. To be sent out as you please.",
   },
 ];
 
@@ -225,7 +225,7 @@ function scrollRight() {
   }
 
   .project-card p {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 
   .project-card a {
