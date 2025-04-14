@@ -71,7 +71,7 @@ const projects = [
 ];
 
 onMounted(() => {
-  deepfakeImage.value = session.get("deepfakeImage") || "/fallback.jpg";
+  deepfakeImage.value = session.get("deepfakeImage") || "https://firebasestorage.googleapis.com/v0/b/lampoon-portfolio.firebasestorage.app/o/images%2Fdefault.jpg?alt=media&token=1aa5eac6-13d2-431b-abd9-12a3a6a3a832";
 });
 
 function scrollLeft() {
