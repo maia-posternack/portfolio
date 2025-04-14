@@ -66,7 +66,7 @@ const projects = [
   {
     name: "Announcing Co-Presidents: Hamza and Avery",
     link: "/hua",
-    description: "Email campaign sent to all undergrads announcing that there has been an error and Hamza and Avery are the new co-presidents of the HUA. To be sent out as you please.",
+    description: "Email campaign sent to all undergrads announcing that  Hamza and Avery are actually the new co-presidents of the HUA. To be sent out as you please.",
   },
 ];
 
