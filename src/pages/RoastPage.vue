@@ -2,6 +2,9 @@
     <div class="app-container">
       <div class="roast-wrapper">
         <pre class="roast-text">{{ typedRoast }}</pre>
+        <div v-if="textFinished && !imageReady" class="loading-overlay">
+  <p class="loading-text">Loading...<br />Don’t refresh</p>
+</div> 
 
         <p v-if="showIdentityLine" class="identity-glitch">
           Anyone ever tell you that you remind them of <span class="identity-name">{{ formattedIdentity }}</span>?
@@ -348,6 +351,61 @@ function tryRevealTileWall() {
   margin-left: 1rem;
 
 }
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: #00ffaa;
+  font-family: monospace;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: #00ffaa;
+  font-family: monospace;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
 
 
 </style>
