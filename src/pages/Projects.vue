@@ -39,7 +39,6 @@
 import { ref, onMounted } from "vue";
 import { session } from "../session";
 
-const deepfakeImage = ref(null);
 const carouselRef = ref(null);
 
 const projects = [
@@ -70,8 +69,29 @@ const projects = [
   },
 ];
 
-onMounted(() => {
-  deepfakeImage.value = session.get("deepfakeImage") || "https://firebasestorage.googleapis.com/v0/b/lampoon-portfolio.firebasestorage.app/o/images%2Fdefault.jpg?alt=media&token=1aa5eac6-13d2-431b-abd9-12a3a6a3a832";
+const deepfakeImage = ref(null);
+const fallbackImage =
+  "https://firebasestorage.googleapis.com/v0/b/lampoon-portfolio.firebasestorage.app/o/images%2Fdefault.jpg?alt=media&token=1aa5eac6-13d2-431b-abd9-12a3a6a3a832";
+
+function checkImage(url) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+
+onMounted(async () => {
+  const sessionImage = session.get("deepfakeImage");
+
+  if (sessionImage && (await checkImage(sessionImage))) {
+    console.log("image worked", sessionImage);
+    deepfakeImage.value = sessionImage;
+  } else {
+    console.log("image didnt work")
+    deepfakeImage.value = fallbackImage;
+  }
 });
 
 function scrollLeft() {
