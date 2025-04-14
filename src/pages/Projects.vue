@@ -54,8 +54,8 @@ const projects = [
   },
   {
     name: "HarvyMarket.com",
-    link: "https://harvymarket.com",
-    description: "Polymarket spoof; To enable your betting addiction",
+    link: "https://www.harvymarket.com/?auth=lampoonoverride",
+    description: "Polymarket spoof; To enable your betting addiction (if not accessing via this link, the Lampoon page password is 'letmein')",
   },
   {
     name: "LampoonWhenItWasFunny.com",
