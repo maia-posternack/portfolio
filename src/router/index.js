@@ -4,6 +4,8 @@ import ScanPage from '../pages/ScanPage.vue'
 import RoastPage from '../pages/RoastPage.vue'
 import Projects from '../pages/Projects.vue'
 import Crimson from '../pages/Crimson.vue'
+import Hua from '../pages/Hua.vue'
+
 
 
 
@@ -13,7 +15,9 @@ const routes = [
   { path: '/scan', component: ScanPage },
   { path: '/roast', component: RoastPage },
   { path: '/packet', component: Projects },
-  { path: '/crimson', component: Crimson }
+  { path: '/crimson', component: Crimson },
+  { path: '/hua', component: Hua }
+
 
 
 ]

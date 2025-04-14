@@ -64,9 +64,9 @@ const projects = [
     description: "Self explanatory",
   },
   {
-    name: "Lampoon site optimizations",
-    link: "#",
-    description: "Made your site better. You're welcome ",
+    name: "Announcing Co-Presidents: Hamza and Avery",
+    link: "/hua",
+    description: "Premade email campaign sent to all undergraduates announcing that there has been an error, and Hamza and Avery are the new co-presidents of the HUA. To be sent out as you please.",
   },
 ];
 
