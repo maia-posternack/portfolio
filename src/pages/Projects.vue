@@ -44,14 +44,14 @@ const carouselRef = ref(null);
 
 const projects = [
   {
-    name: "HarvyMarket.com",
-    link: "https://harvymarket.com",
-    description: "Polymarket spoof; To enable your betting addiction",
-  },
-  {
     name: "Crimson Ads Takeover",
     link: "/crimson",
     description: 'Plastered TheCrimson.com with Lampoon ads that you chose (Brenton protesting the A.D, and "Free Marco") which got 35k views in 1 day.',
+  },
+  {
+    name: "HarvyMarket.com",
+    link: "https://harvymarket.com",
+    description: "Polymarket spoof; To enable your betting addiction",
   },
   {
     name: "FinalClubTies.com",
