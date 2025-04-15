@@ -106,7 +106,7 @@ function typeRoast(text) {
           console.log("Deepfake image not ready after 3s — redirecting to /packet")
           router.push('/packet')
         }
-      }, 3000)
+      }, 5000)
     }
   }, 35)
 }
