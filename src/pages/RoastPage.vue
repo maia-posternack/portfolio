@@ -3,9 +3,6 @@
       <div class="roast-wrapper">
         <pre class="roast-text">
   {{ typedRoast }}
-  <template v-if="textFinished && !imageReady" style="color: #00ffaa;">
-    \n\nLoading... Don’t refresh
-  </template>
 </pre>
 
         <p v-if="showIdentityLine" class="identity-glitch">
@@ -103,9 +100,17 @@ function typeRoast(text) {
       clearInterval(interval)
       textFinished.value = true
       tryRevealTileWall()
+
+      setTimeout(() => {
+        if (!imageReady.value) {
+          console.log("Deepfake image not ready after 3s — redirecting to /packet")
+          router.push('/packet')
+        }
+      }, 3000)
     }
   }, 35)
 }
+
 onMounted(async () => {
   calculateTileGrid()
   window.addEventListener('resize', calculateTileGrid)
