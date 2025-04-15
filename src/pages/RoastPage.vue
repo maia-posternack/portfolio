@@ -1,10 +1,12 @@
   <template>
     <div class="app-container">
       <div class="roast-wrapper">
-        <pre class="roast-text">{{ typedRoast }}</pre>
-        <div v-if="textFinished && !imageReady" class="loading-overlay">
-  <p class="loading-text">Loading...<br />Don’t refresh</p>
-</div> 
+        <pre class="roast-text">
+  {{ typedRoast }}
+  <template v-if="textFinished && !imageReady" style="color: #00ffaa;">
+    \n\nLoading... Don’t refresh
+  </template>
+</pre>
 
         <p v-if="showIdentityLine" class="identity-glitch">
           Anyone ever tell you that you remind them of <span class="identity-name">{{ formattedIdentity }}</span>?
@@ -228,7 +230,7 @@ function tryRevealTileWall() {
 
 @media (max-width: 768px) {
   .roast-text {
-    font-size: .8rem;
+    font-size: 1rem;
     padding: 1rem;
     margin: 2rem 2rem;
     padding-right: 1rem; 
