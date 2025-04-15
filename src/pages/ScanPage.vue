@@ -2,7 +2,7 @@
   <div class="scan-wrapper">
     <h1 class="scan-text-glitch">
       SCANNING FACE <br />
-      <span class="username-text">FOR DOXING INFORMATION</span>
+      <span class="username-text">FOR DOXXING INFORMATION</span>
     </h1>
 
     <div class="scan-line"></div>

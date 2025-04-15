@@ -1,10 +1,7 @@
   <template>
     <div class="app-container">
       <div class="roast-wrapper">
-        <pre class="roast-text">
-  {{ typedRoast }}
-</pre>
-
+        <pre class="roast-text">{{ typedRoast }}</pre>
         <p v-if="showIdentityLine" class="identity-glitch">
           Anyone ever tell you that you remind them of <span class="identity-name">{{ formattedIdentity }}</span>?
         </p>
