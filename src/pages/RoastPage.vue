@@ -64,7 +64,7 @@ function initTiles() {
 
   // Choose a tile ~in the center to glow after a delay
   setTimeout(() => {
-  const centerIndex = cols.value*2+1
+  const centerIndex = cols.value+1
   glowingTileIndex.value = centerIndex
   console.log("Glowing tile:", centerIndex)
 }, tileCount.value * 80 + 1000)
